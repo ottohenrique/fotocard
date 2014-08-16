@@ -38,19 +38,29 @@
 
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript">
+            function sucesso(imageData) {
+              $('#foto').src = imageData;
+            }
+
+            function erro() {
+              alert('deu bad :(');
+            }
 
             $('#tirar_foto').on('click', function() {
-              navigator.camera.getPicture( 
-                function(imageData) {
-                  $('#foto').src = imageData;
-                },
-                function() {
-                  alert('deu bad :(');
-                }, {
+              try {
+              navigator.camera.getPicture(
+                sucesso,
+                erro,
+                {
                   quality: 50,
                   destinationType: Camera.DestinationType.DATA_URL,
                   sourceType : Camera.PictureSourceType.CAMERA,
-                  saveToPhotoAlbum: false } );
+                  saveToPhotoAlbum: false
+                }
+              );
+              } catch(err) {
+                alert(err);
+              }
             });
         </script>
     </body>
